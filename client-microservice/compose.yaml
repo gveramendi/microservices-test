@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=client-microservice-db'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=client-microservice'
+    ports:
+      - '5432'
+    networks:
+      - postgres-db-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: 'always'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: 'password'
+    ports:
+      - 16543:80
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    networks:
+      - postgres-db-network
+
+networks:
+  postgres-db-network:
+    driver: bridge
