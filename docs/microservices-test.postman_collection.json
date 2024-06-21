@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "92e374d6-17ec-436b-8d23-96c687d69507",
+		"_postman_id": "c8b8136a-cd6c-4831-9396-a2ca9b0e6706",
 		"name": "microservices-test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "14225724"
@@ -77,6 +77,37 @@
 			"response": []
 		},
 		{
+			"name": "Modify status account [ACTIVE, HOLD]",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accountStatus\": \"ACTIVE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/accountNumber/00011103",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"accountNumber",
+						"00011103"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Modify client",
 			"request": {
 				"method": "PUT",
@@ -137,34 +168,6 @@
 			"response": []
 		},
 		{
-			"name": "Get account details by clientId (with all accounts)",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/api/accounts/clientId/00222001",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"accounts",
-						"clientId",
-						"00222001"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Get account details by accountNumber",
 			"request": {
 				"method": "GET",
@@ -175,37 +178,6 @@
 						"type": "text"
 					}
 				],
-				"url": {
-					"raw": "http://localhost:8080/api/accounts/accountNumber/00011103",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"accounts",
-						"accountNumber",
-						"00011103"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Modify status account [ACTIVE, HOLD]",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"accountStatus\": \"ACTIVE\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "http://localhost:8080/api/accounts/accountNumber/00011103",
 					"protocol": "http",
@@ -270,6 +242,38 @@
 						"transactions",
 						"accountNumber",
 						"00011103"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get report by clientId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/reports/clientId/00222001?startDate=2024-01-01&endDate=2024-01-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"reports",
+						"clientId",
+						"00222001"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-01-30"
+						}
 					]
 				}
 			},
