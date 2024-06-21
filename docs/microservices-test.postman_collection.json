@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "24ebbc68-d26f-48a2-8171-8b7335cbad66",
+		"_postman_id": "92e374d6-17ec-436b-8d23-96c687d69507",
 		"name": "microservices-test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "14225724"
@@ -54,7 +54,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"Gerson\",\n    \"lastName\": \"Veramendi\",\n    \"gender\": \"MALE\",\n    \"age\": 50,\n    \"idNumber\": \"2711283\",\n    \"address\": \"plaza sesamo\",\n    \"phoneNumber\": \"72500085\",\n    \"clientId\": \"00222001\",\n    \"password\": \"password\"\n}",
+					"raw": "{\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Perez\",\n    \"gender\": \"MALE\",\n    \"age\": 25,\n    \"idNumber\": \"4788293\",\n    \"address\": \"plaza sesamo\",\n    \"phoneNumber\": \"34-4094-45\",\n    \"clientId\": \"00222001\",\n    \"password\": \"password\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,7 +83,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"Marcelo\",\n    \"lastName\": \"Veramendi\",\n    \"gender\": \"MALE\",\n    \"age\": 50,\n    \"idNumber\": \"2711283\",\n    \"address\": \"plaza sesamo\",\n    \"phoneNumber\": \"72500085\",\n    \"clientId\": \"00222001\"\n}",
+					"raw": "{\n    \"firstName\": \"Marcelo\",\n    \"lastName\": \"Perez\",\n    \"gender\": \"MALE\",\n    \"age\": 25,\n    \"idNumber\": \"4788293\",\n    \"address\": \"plaza sesamo\",\n    \"phoneNumber\": \"34-4094-45\",\n    \"clientId\": \"00222001\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -207,12 +207,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/accounts/accountNumber/00011103",
+					"raw": "http://localhost:8080/api/accounts/accountNumber/00011103",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"accounts",
