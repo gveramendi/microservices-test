@@ -1,10 +1,12 @@
 package net.veramendi.account_microservice.controller;
 
 import lombok.AllArgsConstructor;
+
 import net.veramendi.account_microservice.controller.dto.CreateTransactionRequest;
 import net.veramendi.account_microservice.controller.dto.TransactionResponse;
 import net.veramendi.account_microservice.domain.Transaction;
 import net.veramendi.account_microservice.service.TransactionService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ public class TransactionController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getTransactionsByAccountNumber(@PathVariable String accountNumber) {
         List<TransactionResponse> transactions = new ArrayList<>();
-        for (Transaction transaction : this.transactionService.getTransactionsByAccountNumber(accountNumber)) {
+        for (Transaction transaction : this.transactionService.getTransactions(accountNumber, null, null)) {
             transactions.add(this.modelMapper.map(transaction, TransactionResponse.class));
         }
 

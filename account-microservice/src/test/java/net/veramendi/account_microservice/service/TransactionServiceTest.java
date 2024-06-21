@@ -76,7 +76,7 @@ class TransactionServiceTest {
         transactions.add(transaction);
         when(transactionRepository.getAllByAccountId(account.getId())).thenReturn(transactions);
 
-        List<Transaction> retrievedTransactions = transactionService.getTransactionsByAccountNumber("0010010");
+        List<Transaction> retrievedTransactions = transactionService.getTransactions("0010010", null, null);
 
         assertFalse(retrievedTransactions.isEmpty());
         assertEquals(transactions, retrievedTransactions);
@@ -86,6 +86,6 @@ class TransactionServiceTest {
     void shouldNotGetTransactionsByNonExistingAccountNumber() {
         when(accountService.getByAccountNumber("0010010")).thenThrow(new ResourceNotFoundException("Account not found"));
 
-        assertThrows(ResourceNotFoundException.class, () -> transactionService.getTransactionsByAccountNumber("0010010"));
+        assertThrows(ResourceNotFoundException.class, () -> transactionService.getTransactions("0010010", null, null));
     }
 }

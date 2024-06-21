@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,28 +49,12 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientTotalResponse);
     }
 
-    @GetMapping("/clientId/{clientId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ClientTotalResponse> getAccountsByClientId(@PathVariable String clientId) {
-        ClientTotalResponse clientTotalResponse = this.loadClientInfo(clientId);
-
-        List<AccountResponse> accountResponses = new ArrayList<>();
-        for (Account account : this.accountService.getByClientId(clientId)) {
-            AccountResponse accountResponse = this.modelMapper.map(account, AccountResponse.class);
-            accountResponse.setTransactions(this.loadTransactions(account.getAccountNumber()));
-            accountResponses.add(accountResponse);
-        }
-        clientTotalResponse.setAccounts(accountResponses);
-
-        return ResponseEntity.status(HttpStatus.OK).body(clientTotalResponse);
-    }
-
     @GetMapping("/accountNumber/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ClientTotalResponse> getAccountByAccountNumber(@PathVariable String accountNumber) {
         AccountResponse accountResponse =
                 this.modelMapper.map(this.accountService.getByAccountNumber(accountNumber), AccountResponse.class);
-        accountResponse.setTransactions(this.loadTransactions(accountNumber));
+        accountResponse.setTransactions(this.loadTransactions(accountNumber, null, null));
 
         ClientTotalResponse clientTotalResponse = this.loadClientInfo(accountResponse.getClientId());
         clientTotalResponse.setAccounts(List.of(accountResponse));
@@ -85,7 +70,7 @@ public class AccountController {
                 this.modelMapper.map(
                         this.accountService.updateStatus(accountNumber, accountStatusRequest.getAccountStatus()),
                         AccountResponse.class);
-        accountResponse.setTransactions(this.loadTransactions(accountNumber));
+        accountResponse.setTransactions(this.loadTransactions(accountNumber, null, null));
 
         ClientTotalResponse clientTotalResponse = this.loadClientInfo(accountResponse.getClientId());
         clientTotalResponse.setAccounts(List.of(accountResponse));
@@ -100,11 +85,9 @@ public class AccountController {
         return clientTotalResponse;
     }
 
-
-
-    private List<TransactionResponse> loadTransactions(String accountNumber) {
+    private List<TransactionResponse> loadTransactions(String accountNumber, LocalDateTime startDate, LocalDateTime endDate) {
         List<TransactionResponse> transactions = new ArrayList<>();
-        for (Transaction transaction : this.transactionService.getTransactionsByAccountNumber(accountNumber)) {
+        for (Transaction transaction : this.transactionService.getTransactions(accountNumber, startDate, endDate)) {
             transactions.add(this.modelMapper.map(transaction, TransactionResponse.class));
         }
 

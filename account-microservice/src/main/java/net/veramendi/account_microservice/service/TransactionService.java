@@ -29,7 +29,6 @@ public class TransactionService {
     @Transactional
     public Transaction create(String accountNumber, Transaction newTransaction) {
         Account account = this.accountService.getByAccountNumber(accountNumber);
-        Transaction transaction = null;
 
         if (account.getStatus() == AccountStatus.HOLD) {
             String message = "Account %s is HOLD.".formatted(account.getAccountNumber());
@@ -49,10 +48,14 @@ public class TransactionService {
         return createTransaction(account, newTransaction);
     }
 
-    public List<Transaction> getTransactionsByAccountNumber(String accountNumber) {
+    public List<Transaction> getTransactions(String accountNumber, LocalDateTime startDate, LocalDateTime endDate) {
         Account account = this.accountService.getByAccountNumber(accountNumber);
 
-        return this.transactionRepository.getAllByAccountId(account.getId());
+        if (startDate == null && endDate == null) {
+            return this.transactionRepository.getAllByAccountId(account.getId());
+        }
+
+        return this.transactionRepository.getAllByAccountIdAndCreatedDateBetween(account.getId(), startDate, endDate);
     }
 
     private Transaction createTransaction(Account account, Transaction newTransaction) {
