@@ -3,13 +3,11 @@ package net.veramendi.account_microservice.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import net.veramendi.account_microservice.client.CustomerClient;
-import net.veramendi.account_microservice.client.dto.ClientResponse;
 import net.veramendi.account_microservice.controller.dto.*;
 import net.veramendi.account_microservice.domain.Account;
 import net.veramendi.account_microservice.domain.Transaction;
-import net.veramendi.account_microservice.exception.ResourceNotFoundException;
 import net.veramendi.account_microservice.service.AccountService;
+import net.veramendi.account_microservice.service.CustomerService;
 import net.veramendi.account_microservice.service.TransactionService;
 
 import org.modelmapper.ModelMapper;
@@ -32,7 +30,7 @@ public class AccountController {
 
     private final TransactionService transactionService;
 
-    private final CustomerClient clientService;
+    private final CustomerService customerService;
 
     private final ModelMapper modelMapper;
 
@@ -97,29 +95,12 @@ public class AccountController {
 
     private ClientTotalResponse loadClientInfo(String clientId) {
         ClientTotalResponse clientTotalResponse = new ClientTotalResponse();
-        clientTotalResponse.setClient(this.checkClient(clientId));
+        clientTotalResponse.setClient(this.customerService.checkClient(clientId));
 
         return clientTotalResponse;
     }
 
-    private ClientResponse checkClient(String clientId) {
-        try {
-            ClientResponse clientResponse = this.clientService.findByClientId(clientId);
-            if (clientResponse == null || !clientResponse.getIsActive()) {
-                String message = "Client with clientId: %s does not exist or is not active.".formatted(clientId);
 
-                log.error(message);
-                throw new ResourceNotFoundException(message);
-            }
-
-            return clientResponse;
-        } catch (Exception e) {
-            String message = "Client with clientId: %s does not exist or is not active.".formatted(clientId);
-
-            log.error(message);
-            throw new ResourceNotFoundException(message);
-        }
-    }
 
     private List<TransactionResponse> loadTransactions(String accountNumber) {
         List<TransactionResponse> transactions = new ArrayList<>();
